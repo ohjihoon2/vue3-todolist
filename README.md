@@ -1,5 +1,10 @@
 # vue3-project
 
+## json db 실행 - 3000 port
+```
+ json-server --watch db.json
+```
+
 ## Project setup
 ```
 npm install
