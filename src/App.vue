@@ -1,13 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <router-link class="navbar-brand" to="/">Jihoon's</router-link>
+    <router-link class="navbar-brand" :to="{name: 'Home'}">Jihoon's</router-link>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <router-link class="nav-link" to="/todos">Todos</router-link>
       </li>
     </ul>
   </nav>
-  <router-view/>
+  <div class="container">
+    <router-view/>
+  </div>
 </template>
 
 <script>

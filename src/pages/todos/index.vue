@@ -1,6 +1,5 @@
 <template>
-  <router-view/>
-  <div class="container">
+  <div>
     <h2>TO-DO List</h2>
     <input class="form-control" type="text" v-model="searchText" placeholder="Search" @keydown.enter="searchTodo">
     <TodoSimpleForm @add-todo="addTodo"/>
@@ -123,15 +122,16 @@ export default {
       }
     }
 
-    const toggleTodo = async (index) => {
+    const toggleTodo = async (index, checked) => {
+      console.log(checked)
       error.value = ''
       const id = todos.value[index].id
 
       try {
         await axios.patch(`http://localhost:3000/todos/${id}`, {
-          completed: !todos.value[index].completed
+          completed: checked
         })
-        todos.value[index].completed = !todos.value[index].completed
+        todos.value[index].completed = checked
       } catch (err) {
         error.value = 'Something wrong!'
       }

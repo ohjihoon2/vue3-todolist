@@ -83,22 +83,12 @@
     {
       "id": 1730904085920,
       "subject": "8",
-      "completed": false
+      "completed": true
     },
     {
       "id": 1730904086174,
       "subject": "9",
-      "completed": false
-    },
-    {
-      "id": 1730904086516,
-      "subject": "0",
-      "completed": false
-    },
-    {
-      "id": 1730904087619,
-      "subject": "10",
-      "completed": false
+      "completed": true
     }
   ]
 }
