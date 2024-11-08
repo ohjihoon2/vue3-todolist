@@ -33,6 +33,7 @@
       </ul>
     </nav>
   </div>
+  <Toast v-if="showToast" :messages="toastMessages" :type="toastAlertType"/>
 </template>
 
 <script>
@@ -41,12 +42,15 @@ import TodoList from '@/components/TodoList.vue'
 import { ref, computed, watch } from 'vue'
 import axios from 'axios'
 import CursorPointer from '@/components/CursorPointer'
+import Toast from '@/components/Toast'
+import { useToast } from '@/composables(hooks)/toast'
 
 export default {
   components: {
     CursorPointer,
     TodoList,
-    TodoSimpleForm
+    TodoSimpleForm,
+    Toast
   },
   setup () {
     const todos = ref([])
@@ -56,6 +60,30 @@ export default {
     const currentPage = ref(1)
 
     const searchText = ref('')
+
+    // const showToast = ref(false)
+    // const toastTimeOut = ref(null)
+    // const toastMessages = ref('')
+    // const toastAlertType = ref('')
+    // const triggerToast = (message, type = 'success') => {
+    //   toastMessages.value = message
+    //   showToast.value = true
+    //   toastAlertType.value = type
+    //
+    //   toastTimeOut.value = setTimeout(() => {
+    //     toastMessages.value = ''
+    //     showToast.value = false
+    //     toastAlertType.value = ''
+    //     console.log('hello')
+    //   }, 3000)
+    // }
+
+    const {
+      toastMessages,
+      toastAlertType,
+      showToast,
+      triggerToast
+    } = useToast()
 
     // watchEffect(() => {
     //   console.log(currentPage.value)
@@ -84,6 +112,7 @@ export default {
         todos.value = res.data
       } catch (err) {
         error.value = 'Something wrong!'
+        triggerToast('Something went wrong', 'danger')
       }
     }
 
@@ -101,6 +130,7 @@ export default {
       } catch (err) {
         console.log(err)
         error.value = 'Something wrong!'
+        triggerToast('Something went wrong', 'danger')
       }
       // .then(res => {
       //   todos.value.push(res.data)
@@ -119,6 +149,7 @@ export default {
         await getTodos(1)
       } catch (err) {
         error.value = 'Something wrong!'
+        triggerToast('Something went wrong', 'danger')
       }
     }
 
@@ -134,6 +165,7 @@ export default {
         todos.value[index].completed = checked
       } catch (err) {
         error.value = 'Something wrong!'
+        triggerToast('Something went wrong', 'danger')
       }
     }
 
@@ -171,7 +203,11 @@ export default {
       error,
       numberOfPages,
       currentPage,
-      getTodos
+      getTodos,
+      showToast,
+      toastMessages,
+      toastAlertType,
+      triggerToast
     }
   }
 }
