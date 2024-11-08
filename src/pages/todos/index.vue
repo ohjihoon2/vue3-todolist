@@ -1,8 +1,11 @@
 <template>
   <div>
-    <h2>TO-DO List</h2>
+    <div class="d-flex justify-content-between mb-3">
+      <h2>TO-DO List</h2>
+      <button class="btn btn-primary" @click="moveToCreatePage">create todo</button>
+    </div>
     <input class="form-control" type="text" v-model="searchText" placeholder="Search" @keydown.enter="searchTodo">
-    <TodoSimpleForm @add-todo="addTodo"/>
+<!--    <TodoSimpleForm @add-todo="addTodo"/>-->
     <div style="color: red">{{ error }}</div>
 
     <div v-if="!todos.length">
@@ -37,22 +40,24 @@
 </template>
 
 <script>
-import TodoSimpleForm from '@/components/TodoSimpleForm.vue'
+// import TodoSimpleForm from '@/components/TodoSimpleForm.vue'
 import TodoList from '@/components/TodoList.vue'
 import { ref, computed, watch } from 'vue'
 import axios from 'axios'
 import CursorPointer from '@/components/CursorPointer'
 import Toast from '@/components/Toast'
 import { useToast } from '@/composables(hooks)/toast'
+import { useRouter } from 'vue-router'
 
 export default {
   components: {
     CursorPointer,
     TodoList,
-    TodoSimpleForm,
+    // TodoSimpleForm,
     Toast
   },
   setup () {
+    const router = useRouter()
     const todos = ref([])
     const error = ref('')
     const numberOfTodos = ref(0)
@@ -103,6 +108,12 @@ export default {
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value / limit)
     })
+
+    const moveToCreatePage = () => {
+      router.push({
+        name: 'TodoCreate',
+      })
+    }
 
     const getTodos = async (page = currentPage.value) => {
       currentPage.value = page
@@ -207,7 +218,8 @@ export default {
       showToast,
       toastMessages,
       toastAlertType,
-      triggerToast
+      triggerToast,
+      moveToCreatePage
     }
   }
 }
