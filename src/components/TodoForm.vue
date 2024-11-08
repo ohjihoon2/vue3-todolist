@@ -8,7 +8,7 @@
         <div class="form-group">
           <label>Todo Subject</label>
           <input v-model="todo.subject" type="text" class="form-control">
-          <div style="color: red" v-if="subjectError">{{subjectError}}</div>
+          <div class="text-red" v-if="subjectError">{{subjectError}}</div>
         </div>
       </div>
       <div v-if="editing" class="col-6">
@@ -31,7 +31,9 @@
     <button type="submit" class="btn btn-primary" :disabled="!todoUpdated"> {{editing ? 'update': 'create'}}</button>
     <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">cancel</button>
   </form>
-  <Toast v-if="showToast" :messages="toastMessages" :type="toastAlertType"/>
+  <transition name="fade">
+    <Toast v-if="showToast" :messages="toastMessages" :type="toastAlertType"/>
+  </transition>
   <div id="jihoon">oh</div>
 </template>
 
@@ -161,5 +163,24 @@ export default {
 </script>
 
 <style scoped>
+  .text-red {
+    color: red;
+  }
 
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.5s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  .fade-enter-to,
+  .fade-leave-from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 </style>
