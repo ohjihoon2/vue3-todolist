@@ -36,11 +36,6 @@
       "completed": false
     },
     {
-      "id": 1730904075457,
-      "subject": "999",
-      "completed": false
-    },
-    {
       "id": 1730904078258,
       "subject": "111",
       "completed": false
@@ -76,11 +71,6 @@
       "completed": false
     },
     {
-      "id": 1730904085651,
-      "subject": "7",
-      "completed": false
-    },
-    {
       "id": 1730904085920,
       "subject": "8",
       "completed": true
@@ -94,22 +84,6 @@
       "subject": "buy milk",
       "body": "buy milk at supermarket1",
       "id": 1730904086175
-    },
-    {
-      "subject": "z",
-      "body": "z",
-      "id": 1730904086176
-    },
-    {
-      "subject": "1",
-      "body": "2",
-      "id": 1730904086177
-    },
-    {
-      "subject": "23",
-      "completed": true,
-      "body": "3",
-      "id": 1730904086178
     }
   ]
 }

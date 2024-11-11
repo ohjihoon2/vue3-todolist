@@ -6,29 +6,64 @@
         <span :class="{todo: todo.completed}">{{todo.subject}}</span>
       </div>
       <div>
-        <button class="btn btn-danger btn-sm" @click.stop="deleteTodo(index)">delete</button>
+        <button class="btn btn-danger btn-sm" @click.stop="openModal(todo.id)">delete</button>
       </div>
     </div>
   </div>
+  <teleport to="#modal">
+    <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo">
+      <template v-slot:title>
+        Delete Todo!
+      </template>
+      <template v-slot:body>
+        Are you sure you want to delete this todo?
+      </template>
+      <template v-slot:footer>
+        <button type="button" class="btn btn-secondary" @click="onClose">Close</button>
+        <button type="button" class="btn btn-danger" @click="onDelete">Delete</button>
+      </template>
+    </Modal>
+  </teleport>
 </template>
 
 <script>
 import { useRouter } from 'vue-router'
+import Modal from '@/components/DeleteModal'
+import { ref } from 'vue'
 
 export default {
+  components: {
+    Modal
+  },
   name: 'TodoList',
   props: ['todos'],
   emits: ['toggle-todo', 'delete-todo'],
 
   setup (props, { emit }) {
     const router = useRouter()
+    const todoDeleteId = ref(null)
+
+    const showModal = ref(false)
 
     const toggleTodo = (index, event) => {
       emit('toggle-todo', index, event.target.checked)
     }
 
-    const deleteTodo = (index) => {
-      emit('delete-todo', index)
+    const openModal = (id) => {
+      todoDeleteId.value = id
+      showModal.value = true
+    }
+
+    const closeModal = () => {
+      todoDeleteId.value = null
+      showModal.value = false
+    }
+
+    const deleteTodo = () => {
+      emit('delete-todo', todoDeleteId.value)
+
+      showModal.value = false
+      todoDeleteId.value = null
     }
 
     const moveToPage = (todoId) => {
@@ -44,7 +79,10 @@ export default {
     return {
       toggleTodo,
       deleteTodo,
-      moveToPage
+      moveToPage,
+      showModal,
+      openModal,
+      closeModal
     }
   }
 }

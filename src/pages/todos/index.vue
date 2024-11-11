@@ -111,7 +111,7 @@ export default {
 
     const moveToCreatePage = () => {
       router.push({
-        name: 'TodoCreate',
+        name: 'TodoCreate'
       })
     }
 
@@ -151,9 +151,8 @@ export default {
       // })
     }
 
-    const deleteTodo = async (index) => {
+    const deleteTodo = async (id) => {
       error.value = ''
-      const id = todos.value[index].id
       console.log(id)
       try {
         await axios.delete(`http://localhost:3000/todos/${id}`)
