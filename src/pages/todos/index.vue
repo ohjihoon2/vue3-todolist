@@ -43,7 +43,7 @@
 // import TodoSimpleForm from '@/components/TodoSimpleForm.vue'
 import TodoList from '@/components/TodoList.vue'
 import { ref, computed, watch } from 'vue'
-import axios from 'axios'
+import axios from '@/axios'
 import CursorPointer from '@/components/CursorPointer'
 import Toast from '@/components/Toast'
 import { useToast } from '@/composables(hooks)/toast'
@@ -118,7 +118,7 @@ export default {
     const getTodos = async (page = currentPage.value) => {
       currentPage.value = page
       try {
-        const res = await axios.get(`http://localhost:3000/todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`)
+        const res = await axios.get(`todos?_sort=id&_order=desc&subject_like=${searchText.value}&_page=${page}&_limit=${limit}`)
         numberOfTodos.value = res.headers['x-total-count']
         todos.value = res.data
       } catch (err) {
@@ -132,7 +132,7 @@ export default {
     const addTodo = async (todo) => {
       error.value = ''
       try {
-        await axios.post('http://localhost:3000/todos', {
+        await axios.post('todos', {
           id: todo.id,
           subject: todo.subject,
           completed: todo.completed
@@ -155,7 +155,7 @@ export default {
       error.value = ''
       console.log(id)
       try {
-        await axios.delete(`http://localhost:3000/todos/${id}`)
+        await axios.delete(`todos/${id}`)
         await getTodos(1)
       } catch (err) {
         error.value = 'Something wrong!'
@@ -169,7 +169,7 @@ export default {
       const id = todos.value[index].id
 
       try {
-        await axios.patch(`http://localhost:3000/todos/${id}`, {
+        await axios.patch(`todos/${id}`, {
           completed: checked
         })
         todos.value[index].completed = checked
