@@ -5,11 +5,12 @@
   <form v-else @submit.prevent="onSave">
     <div class="row">
       <div class="col-6">
-        <div class="form-group">
-          <label>Todo Subject</label>
-          <input v-model="todo.subject" type="text" class="form-control">
-          <div class="text-red" v-if="subjectError">{{subjectError}}</div>
-        </div>
+<!--        <div class="form-group">-->
+<!--          <label>Todo Subject</label>-->
+<!--          <input v-model="todo.subject" type="text" class="form-control">-->
+<!--          <div class="text-red" v-if="subjectError">{{subjectError}}</div>-->
+<!--        </div>-->
+        <Input :error="subjectError" label="Subject" v-model:subject="todo.subject"></Input>
       </div>
       <div v-if="editing" class="col-6">
         <div class="form-group">
@@ -39,15 +40,17 @@
 
 <script>
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import axios from '@/axios'
 import { computed, ref, onBeforeMount, onMounted } from 'vue'
 import _ from 'lodash'
 import Toast from '@/components/Toast'
 import { useToast } from '@/composables(hooks)/toast'
+import Input from '@/components/Input'
 
 export default {
   components: {
-    Toast
+    Toast,
+    Input
   },
   props: {
     editing: {
@@ -130,7 +133,7 @@ export default {
           res = await axios.put(`http://localhost:3000/todos/${todoId}`, data)
           originalTodo.value = { ...res.data }
         } else {
-          res = await axios.post('http://localhost:3000/todos', data)
+          res = await axios.post('todos', data)
           todo.value.subject = ''
           todo.value.body = ''
         }
@@ -156,16 +159,13 @@ export default {
       showToast,
       toastMessages,
       toastAlertType,
-      subjectError
+      subjectError,
     }
   }
 }
 </script>
 
 <style scoped>
-  .text-red {
-    color: red;
-  }
 
   .fade-enter-active,
   .fade-leave-active {
