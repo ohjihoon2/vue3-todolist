@@ -1,12 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <router-link class="navbar-brand" :to="{name: 'Home'}">Jihoon's</router-link>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <router-link class="nav-link" to="/todos">Todos</router-link>
-      </li>
-    </ul>
-  </nav>
+  <Navbar />
   <div class="container">
     <router-view/>
   </div>
@@ -15,9 +8,11 @@
 
 <script>
 import Toast from '@/components/Toast'
+import Navbar from '@/components/Navbar'
 export default {
   components: {
-    Toast
+    Toast,
+    Navbar
   }
 }
 </script>

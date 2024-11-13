@@ -13,28 +13,8 @@
     </div>
     <TodoList :todos="todos" @toggle-todo="toggleTodo" @delete-todo="deleteTodo"/>
     <hr />
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <CursorPointer class="page-link"  v-if="currentPage !== 1" @click="getTodos(currentPage -1)">
-            Previous
-          </CursorPointer>
-        </li>
-        <li class="page-item"
-            :class="currentPage === page ? 'active' : ''"
-            v-for="page in numberOfPages"
-            :key="page"
-        >
-          <CursorPointer class="page-link" @click="getTodos(page)">{{page}}</CursorPointer>
-        </li>
-        <li class="page-item">
-          <CursorPointer class="page-link"
-                         v-if="numberOfPages !== currentPage"
-                         @click="getTodos(currentPage+1)"
-          >Next</CursorPointer>
-        </li>
-      </ul>
-    </nav>
+    <Pagination v-if="todos.length" :numberOfPages="numberOfPages" :currentPage="currentPage" @click="getTodos"/>
+
   </div>
 </template>
 
@@ -43,14 +23,14 @@
 import TodoList from '@/components/TodoList.vue'
 import { ref, computed, watch } from 'vue'
 import axios from '@/axios'
-import CursorPointer from '@/components/CursorPointer'
 import { useToast } from '@/composables(hooks)/toast'
 import { useRouter } from 'vue-router'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
-    CursorPointer,
-    TodoList
+    TodoList,
+    Pagination
     // TodoSimpleForm,
   },
   setup () {
@@ -58,8 +38,8 @@ export default {
     const todos = ref([])
     const error = ref('')
     const numberOfTodos = ref(0)
-    const limit = 5
     const currentPage = ref(1)
+    const limit = 5
 
     const searchText = ref('')
 
