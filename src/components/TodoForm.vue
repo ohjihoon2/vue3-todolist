@@ -32,9 +32,6 @@
     <button type="submit" class="btn btn-primary" :disabled="!todoUpdated"> {{editing ? 'update': 'create'}}</button>
     <button class="btn btn-outline-dark ml-2" @click="moveToTodoListPage">cancel</button>
   </form>
-  <transition name="fade">
-    <Toast v-if="showToast" :messages="toastMessages" :type="toastAlertType"/>
-  </transition>
   <div id="jihoon">oh</div>
 </template>
 
@@ -139,6 +136,12 @@ export default {
         }
         const message = 'Successfully ' + (props.editing ? 'Updated' : 'Created')
         triggerToast(message)
+
+        if (!props.editing) {
+          await router.push({
+            name: 'Todos'
+          })
+        }
       } catch (error) {
         triggerToast('Something went wrong', 'danger')
       }
@@ -167,20 +170,4 @@ export default {
 
 <style scoped>
 
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: all 0.5s ease;
-  }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-
-  .fade-enter-to,
-  .fade-leave-from {
-    opacity: 1;
-    transform: translateY(0px);
-  }
 </style>

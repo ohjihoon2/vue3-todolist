@@ -10,13 +10,17 @@
   <div class="container">
     <router-view/>
   </div>
+    <Toast />
 </template>
 
 <script>
+import Toast from '@/components/Toast'
 export default {
-
+  components: {
+    Toast
+  }
 }
 </script>
 
-<style>
+<style scoped>
 </style>
